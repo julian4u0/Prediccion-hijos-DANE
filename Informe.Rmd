@@ -70,7 +70,7 @@ Estas variables se usan para  crear X_data el cual se  transpone, entonces X_dat
 
 La red neuronal que se utilizó tiene un hidden layer con 70 hidden units, con función de activación Leaky Relu, el output-layer tiene la dimensión 1 ysu función de activación es la función de identidad, la cost-function es el MSE y la red se entrenó usando gradient descent, para testear la red se usó k-fold crossvalidation, para lo que se obtuvó un MSE de más o menos 0.25, o sea un RMSE de 0.5 y una accuracy de casi 74%, y bajo estos resultados, se dio por convincente el rendimiento de la red neuronal.
 
-La red se entrena con la función neural_net(X,Y,n_h,learning_rate,epochs, cost_goal = 0, print_cost = False, read = False, save = False), donde 'X' son los datos, 'Y' la variable a predecir, 'n_h' es el numero de capas ocultas, 'cost_goal' es la meta que queremos alcanzar con la función de costo; si el cost_goal es alcanzado, el entrenamiento cancela y los parametros son salvados; si 'read' es True indica que la red utilizará los parametros que fueron obtenidos y guardados de anteriores iteraciones, 'save' indica si queremos guardar los parámetros;  los argumentos que se encontraron para rebajar el MSE-training-error fueron los siguientes: 
+La red se entrena con la función neural_net(X,Y,n_h,learning_rate,epochs, cost_goal = 0, print_cost = False, read = False, save = False), donde 'X' son los datos, 'Y' la variable a predecir, 'n_h' es el numero de capas ocultas, 'cost_goal' es la meta que queremos alcanzar con la función de costo; si el cost_goal es alcanzado, el entrenamiento se detiene y los parametros son salvados, así se puede entrenar la red neuronal con un learning rate diferente a partir de este punto sin que el modelo salte el costo mínimo ; si 'read' es True indica que la red utilizará los parametros que fueron obtenidos y guardados de anteriores iteraciones, 'save' indica si queremos guardar los parámetros;  los argumentos que se encontraron para rebajar el MSE-training-error fueron los siguientes: 
 
 neural_net(X_data,Y_data,10*n_x,learning_rate=10000,epochs=3000, cost_goal =  0.26, print_cost = True, read = False, save = False)
 
@@ -110,5 +110,13 @@ https://www.elheraldo.co/colombia/en-ultimos-48-anos-colombianas-pasaron-de-tene
 https://www.elespectador.com/noticias/salud/en-colombia-las-mujeres-tienen-menos-hijos-y-los-hogares-de-solteros-aumentaron/
 
 
+
+## Enlaces 
+
+Enlace para github: https://github.com/julian4u0/Prediccion-hijos-DANE
+
+Enlace para RPubs: https://rpubs.com/jjhurtadoa/
+
 <br>
 <br>
+
