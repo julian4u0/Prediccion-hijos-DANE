@@ -77,11 +77,14 @@ Para evaluar un nuevo hogar, su vector de atributos es estandardizado y despues 
 
 ## Resultado
 
-El resultado de nuestro trabajo se puede evidenciar en el aplicativo, nuestro modelo tiene un error de __ <!--------- FALTA AQUI ---------> lo cual significa que para de acuerdo a los parametros entrados por el usuario, este tiene ....<!--------- FALTA AQUI --------->
+El resultado de nuestro trabajo se puede evidenciar en el aplicativo, nuestro modelo tiene un error de 0.26 de MSE, y un accuracy de 0.74 lo cual significa que  de acuerdo a los parámetros entrados por el usuario, este tiene 74% de probabilidad de obtener una predicción acertada. 
+
 
 
 ## Conclusiones
-<!--------- FALTA AQUI --------->
+
+Encontramos que la manipulación de datos en el mundo real requiere de un minucioso trabajo para intentar adaptar los datos de manera correcta y así elaborar la variable objetivo de manera precisa. También evidenciamos que para este caso, nos dió mejor resultado un modelo creado por nosotros mismos, para adaptarlo a nuestras necesidades.  
+
 ## Bibliografia
 
 
