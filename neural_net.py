@@ -365,6 +365,7 @@ cuartos = sys.argv[7] #cuartos
 #one can import the following function from a different file to use the neural network and the obtained parameters from this file to make a prediction on new date
 def label_new_data(X1, X2, X3, X4, X5, X6, X7):
 	X = np.array([X1, X2, X3, X4, X5, X6, X7])
+	X = X.reshape((7,1))
 	#standardize X
 	X = (X - X_mean) / X_std
 	#call learned parameters
