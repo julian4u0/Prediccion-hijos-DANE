@@ -134,7 +134,7 @@ def two_layer_forward(X, parameters):
 	Y_hat = A2
 	return(Y_hat,caches)
 
-#Cost-functions
+#Cost-functions is the calculation of the mean-squared-error
 def cost_func(Y,Y_hat):
 	m = len(Y_hat[0])
 	cost = 1/m * np.sum(np.power(Y-Y_hat,2))
@@ -222,7 +222,7 @@ def neural_net(X,Y,n_h,learning_rate,epochs, cost_goal = 0, print_cost = False, 
 		#compute predicted labels in every iteration and store cache for backward-propagation
 		Y_hat,caches = two_layer_forward(X, parameters)
 	
-		#show costs to control convergence
+		#show costs (equal to mean-squared-error) to control convergence
 		cost = cost_func(Y,Y_hat)
 		if print_cost == True:
 			if epoch % 10 == 0:
