@@ -54,6 +54,8 @@ X_data = data_temp[:,[2,3,4,5,8,9,10]].T #choose columns that shall be considere
 X_data = np.vectorize(float)(X_data)
 #standardize
 X_mean = np.mean(X_data, axis=1).reshape(X_data.shape[0],1)
+
+
 X_std = np.std(X_data, axis=1).reshape(X_data.shape[0],1)
 X_data = (X_data - X_mean) / X_std
 #so X-data is (n_x,m)-matrix, where every column is a vector containing all attributes of one instance
@@ -339,8 +341,30 @@ def alt_cross_validate(k,n_h,learning_rate,epochs, least_cost_goal = 0, print_co
 	print("least cost = "+str(cost))
 	return(parameters)
 
+
+
+import sys
+genero = sys.argv[1]
+edad = sys.argv[2]
+estadocivil = sys.argv[3]
+a = sys.argv[4]
+personas = sys.argv[5] # numero de personas que viven en el hogar
+ingresos = sys.argv[6] #ingresos del hogar
+cuartos = sys.argv[7] #cuartos
+
+
+
+# 1 Sex of the chef of the house
+# 2 Age of this chef
+# 3 Marital status of this chef
+# 4 Stands for weather the spouse lives in the same household or not
+# 5 Number of persons living in the household
+# 6 Income of the household
+# 7 Number of rooms in which the persons of the household sleep
+
 #one can import the following function from a different file to use the neural network and the obtained parameters from this file to make a prediction on new date
-def label_new_data(X):
+def label_new_data(X1, X2, X3, X4, X5, X6, X7):
+	X = np.array([X1, X2, X3, X4, X5, X6, X7])
 	#standardize X
 	X = (X - X_mean) / X_std
 	#call learned parameters
@@ -350,6 +374,9 @@ def label_new_data(X):
 	#destandardize label
 	Y_hat = Y_hat * Y_std + Y_mean
 	#round label to integer
-	Y_hat =  round(Y_hat[0][0])
+	#Y_hat =  round(Y_hat[0][0])
+	Y_hat =  Y_hat[0][0]
 
 	return Y_hat
+
+print(label_new_data(int(genero), int(edad), int(estadocivil), int(a), int(personas), int(ingresos), int(cuartos)))

@@ -89,8 +89,7 @@ ui <- fluidPage(
         
         #======================================================================================#
         # Mostrar output de server
-        mainPanel(htmlOutput("textoSeleccion"),
-                  htmlOutput("textoPrediccion"))
+        mainPanel(htmlOutput("textoPrediccion"))
         # Fin mostrar output
         #======================================================================================#
     )
@@ -102,17 +101,13 @@ ui <- fluidPage(
 
 #inicio server
 server <- function(input, output) {
-    output$textoSeleccion <- renderText({
-        paste("<p> Edad: ",
-              input$edad,
-              "<br></p>")
-    })
+    
     
     output$textoPrediccion <- renderText({
         paste(
-            "<p>Resultado de python: ",
-            modelo(input$genero, input$edad, input$personas),
-            "</p>"
+            "<h4>Numero Estimado de hijos: ",
+            modelo(input$genero, input$edad,input$estadocivil, 1, input$personas, input$ingresos, input$cuartos),
+            "</h4>"
         )
     })
 }
@@ -120,11 +115,11 @@ server <- function(input, output) {
 
 #======================================================================================#
 # funciones
-modelo <- function(genero, edad, personas) {
+modelo <- function(genero, edad, estadocivil, a, personas, ingresos, cuartos) {
     #aca se puede llamar a un modelo
     resultado <-
         system(paste(
-            c("python", "example.py", genero, edad, personas),
+            c("python", "neural_net.py", genero, edad, estadocivil, a, personas, ingresos, cuartos),
             collapse = " "
         ),
         wait = TRUE,
