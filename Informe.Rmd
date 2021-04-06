@@ -1,6 +1,6 @@
 ---
 title: "Informe"
-author: "Nombre de los integrantes: <br>Julian Alejandro Usuga Ortiz<br> Juan Jose Hurtado Alvarez<br> Diego de Oliveira Hitzges<br> Santiago Campos <br> Santiago Poveda<br>"
+author: "Nombre de los integrantes: <br>Julian Alejandro Usuga Ortiz<br> Juan Jose Hurtado Alvarez<br> Diego de Oliveira Hitzges<br> Santiago Campos <br> Santiago Poveda <br>"
 date: "4/4/2021"
 output: html_document
 ---
