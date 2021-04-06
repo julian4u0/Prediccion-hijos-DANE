@@ -57,7 +57,7 @@ Finalmente se obtienen los mejores resultados con una red neuronal creada a mano
 
 En el modelo creado en python se usa  el archivo "datos.csv",  se e copia parte de los datos en "data2.txt". Se usó "open(data2.txt, r)" en el programa de la red neuronal "neural_net.py" para accesar los datos transformandolos en una lista de listas usando "split". Cada lista interior es la una línea de los datos de la tabla de Excel y sus elementos son las columnas de esta línea. Se cambia la expresión "NA" para el valor de zero (0), de modo que se manejen una variables completamente numéricas. Posteriormente se transforma la lista de listas en un Array (o sea, en una matriz) en cual cada linea es una instancia de hogar y se mezclan estas lineas para que la secuencia no sea siempre la misma. Se escojieron las líneas 2,3,4,5,8,9,10 para crear X_data y se transpone, entonces X_data es una matriz de dimension 7xm, en cual cada columna es una instancia de hogar. se estandariza X para tener todo en una escala común. Para crear las predictoras "Y" se escojió la línea 7 del Array hecho anteriormente para crear Y_data y de mismo modo que con las X se transpone, por lo tanto, Y_data se vuelve una matriz de dimensión 1xm en cual los elementos son los numeros de hijos de cada hogar y finalmente se estandariza Y.
 
-#####Red Neuronal
+##### Red Neuronal
 
 La red neuronal que se utilizó tiene un hidden layer con 70 hidden units, con función de activación Leaky Relu, el output-layer tiene la dimensión 1 y no hay una función de activación, la cost-function es el MSE y la red se entrenó usando gradient descent, para testear la red se usó k-fold crossvalidation, para lo que se obtuvó un MSE de más o menos 0.25, o sea un RMSE de 0.5 y una accuracy de casi 74%, y bajo estos resultados, se dio por convincente el rendimiento de la red neuronal.
 
@@ -88,3 +88,6 @@ https://www.elheraldo.co/colombia/en-ultimos-48-anos-colombianas-pasaron-de-tene
 
 https://www.elespectador.com/noticias/salud/en-colombia-las-mujeres-tienen-menos-hijos-y-los-hogares-de-solteros-aumentaron/
 <!--------- FALTA AQUI --------->
+
+<br>
+<br>

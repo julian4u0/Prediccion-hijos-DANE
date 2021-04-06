@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Nombre de los integrantes:  Julian Alejandro Usuga Ortiz  Juan Jose Hurtado Alvarez  Diego de Oliveira Hitzges" />
+<meta name="author" content="Nombre de los integrantes:  Julian Alejandro Usuga Ortiz  Juan Jose Hurtado Alvarez  Diego de Oliveira Hitzges  Santiago CAmpos   Santiago Poveda" />
 
 
 <title>Informe</title>
@@ -349,7 +349,7 @@ pre code {
 
 
 <h1 class="title toc-ignore">Informe</h1>
-<h4 class="author">Nombre de los integrantes: <br>Julian Alejandro Usuga Ortiz<br> Juan Jose Hurtado Alvarez<br></h4>
+<h4 class="author">Nombre de los integrantes: <br>Julian Alejandro Usuga Ortiz<br> Juan Jose Hurtado Alvarez<br> Diego de Oliveira Hitzges<br> Santiago CAmpos <br> Santiago Poveda<br></h4>
 <h4 class="date">4/4/2021</h4>
 
 </div>
@@ -358,12 +358,13 @@ pre code {
 <p><br></p>
 <div id="introducción" class="section level2">
 <h2>Introducción</h2>
-<p>Este aplicativo se realiza con la motivacion de realizar un trabajo analitico para llegar a un dato bastante útil como lo es el numero de hijos usando tecnicas de aprendizaje estadistico modernas en datos abiertos proporcionados por el DANE (Departamento Administrativo Nacional de Estadística).</p>
+<p>Este aplicativo se realiza con la motivación de realizar un trabajo analítico para llegar a un dato bastante útil como lo es el numero de hijos usando técnicas de aprendizaje estadístico modernas en datos abiertos proporcionados por el DANE (Departamento Administrativo Nacional de Estadística).</p>
 <p>Esta encuesta fue realizada en el 2019 y recoge datos de los servicios de los hogares, composicion de los hogares, entre otros.</p>
+<p>Se piensa en desarrollar el aplicativo, como herramienta útil para las organizaciones gubernamentales que deseen analizar los factores que influyen en la sobrepoblación.</p>
 </div>
 <div id="retos" class="section level2">
 <h2>Retos</h2>
-<p>Como en cualquier problema de datos, estos no estaban inicialmente en un formato que nos pudiera analizarlos con facilidad, el primer reto fue que los encabezados de las columnas no tenian un identificador facil de diferenciar, asi que tuvimos que recurrir varias veces a la documentacion de la encuesta para poder saber con que variables tratabamos. Otro reto fue unir las bases de datos ya que estas estan separadas, elegir muy bien cuales usar ya que no todas ayudan a estimar correctamente el numero de hijos y podrian dañar nuestro modelo predictivo.</p>
+<p>Como en cualquier problema de datos, estos no estaban inicialmente en un formato que se pudieran analizar con facilidad, el primer reto fue que los encabezados de las columnas no tenian un identificador fácil de diferenciar, así que tuvimos que recurrir varias veces a la documentación de la encuesta para poder saber con que variables tratabamos. Otro reto fue unir las bases de datos ya que estas estan separadas, elegir muy bien cuales usar ya que no todas ayudan a estimar correctamente el numero de hijos y podrian dañar nuestro modelo predictivo. Encontrar, o desarrollar el mejor modelo para obtener los resultados obtenidos, fue otro reto con el que nos encontramos.</p>
 </div>
 <div id="materiales" class="section level2">
 <h2>Materiales</h2>
@@ -389,7 +390,19 @@ pre code {
 </div>
 <div id="metodos" class="section level2">
 <h2>Metodos</h2>
-<p>Descripcion de los metodos usados (que modelo, etc) <!--------- FALTA AQUI ---------></p>
+<p>Primeramente se manipulan los datos en el archivo r-manipulacion-datos.rmd, en el cual se descargan los archivos de “Caracteristicas y composicion del hogar.sav” y “Servicios del hogar.sav” con un breve preprocesamiento obtendremos nuestra variable a predecir que son los hijos y las características que predicen el modelo. Este preprocesamiento es guardado en el archivo “datos.csv”</p>
+<p>A continuación, se intentaron 3 modelos, y se elige el del mejor RMSE y mejor accuracy, el primer modelo lo podemos encontrar en “knn.Rmd” en donde se construye un modelo de K-vecinos más cercanos y se obtiene un RMSE de: el segundo intento se hace con la librería keras creando una red neuronal con ayuda de este framework, pero se obtiene un accuracy muy bajo, se puede encontrar en el archivo “RNNKeras.Rmd” Finalmente se obtienen los mejores resultados con una red neuronal creada a mano que se encuentra en el archivo “neural_net.py” y que obtiene un RMSE= 0.5 y un accuracy=0.74</p>
+<p>En el modelo creado en python se usa el archivo “datos.csv”, se e copia parte de los datos en “data2.txt”. Se usó “open(data2.txt, r)” en el programa de la red neuronal “neural_net.py” para accesar los datos transformandolos en una lista de listas usando “split”. Cada lista interior es la una línea de los datos de la tabla de Excel y sus elementos son las columnas de esta línea. Se cambia la expresión “NA” para el valor de zero (0), de modo que se manejen una variables completamente numéricas. Posteriormente se transforma la lista de listas en un Array (o sea, en una matriz) en cual cada linea es una instancia de hogar y se mezclan estas lineas para que la secuencia no sea siempre la misma. Se escojieron las líneas 2,3,4,5,8,9,10 para crear X_data y se transpone, entonces X_data es una matriz de dimension 7xm, en cual cada columna es una instancia de hogar. se estandariza X para tener todo en una escala común. Para crear las predictoras “Y” se escojió la línea 7 del Array hecho anteriormente para crear Y_data y de mismo modo que con las X se transpone, por lo tanto, Y_data se vuelve una matriz de dimensión 1xm en cual los elementos son los numeros de hijos de cada hogar y finalmente se estandariza Y.</p>
+<div id="red-neuronal" class="section level5">
+<h5>Red Neuronal</h5>
+<p>La red neuronal que se utilizó tiene un hidden layer con 70 hidden units, con función de activación Leaky Relu, el output-layer tiene la dimensión 1 y no hay una función de activación, la cost-function es el MSE y la red se entrenó usando gradient descent, para testear la red se usó k-fold crossvalidation, para lo que se obtuvó un MSE de más o menos 0.25, o sea un RMSE de 0.5 y una accuracy de casi 74%, y bajo estos resultados, se dio por convincente el rendimiento de la red neuronal.</p>
+<p>La red se entrena con la función neural_net(X,Y,n_h,learning_rate,epochs, cost_goal = 0, print_cost = False, read = False, save = False), donde ‘X’ son los datos, ‘Y’ la variable a predecir, ‘n_h’ es el numero de capas ocultas, ‘cost_goal’ es la meta que queremos alcanzar con la función de costo, si ‘read’ es True indica que la red utilizará los parametros que fueron obtenidos y guardados de anteriores iteraciones, ‘save’ indica si queremos guardar los parámetros; los argumentos que se encontraron para rebajar el MSE-training-error fueron los siguientes:</p>
+<p>neural_net(X_data,Y_data,10*n_x,learning_rate=10000,epochs=3000, cost_goal = 0.26, print_cost = True, read = False, save = False)</p>
+<p>neural_net(X_data,Y_data,10*n_x,learning_rate=5000,epochs=3000, cost_goal = 0.257, print_cost = True, read = True, save = False)</p>
+<p>neural_net(X_data,Y_data,10*n_x,learning_rate=2000,epochs=3000, cost_goal = 0.2564, print_cost = True, read = True, save = False)</p>
+<p>La validación cruzada se hizo llamando a la función con los siguientes parámetros: cross_validate(10,10*n_x,10000,300, mean_cost_goal = 0.26, print_cost = True, read = False, save = False)</p>
+<p>Para evaluar un nuevo hogar, su vector de atributos es estandardizado y despues pasa toda la red neuronal (usando los parametros que se obtuvieron durante el entrenamiento) para obtener una estimación “y_hat” y este “y_hat” se desestandariza y finalmente se redondeado para obtener la predicción. Esto se hace con la función label_new_data(X) que se encuentra en el archivo “neural_net.py”</p>
+</div>
 </div>
 <div id="resultado" class="section level2">
 <h2>Resultado</h2>
@@ -397,10 +410,13 @@ pre code {
 </div>
 <div id="conclusiones" class="section level2">
 <h2>Conclusiones</h2>
+<!--------- FALTA AQUI --------->
 </div>
 <div id="bibliografia" class="section level2">
 <h2>Bibliografia</h2>
-<!--------- FALTA AQUI --------->
+<p><a href="https://www.elheraldo.co/colombia/en-ultimos-48-anos-colombianas-pasaron-de-tener-siete-hijos-dos-310604" class="uri">https://www.elheraldo.co/colombia/en-ultimos-48-anos-colombianas-pasaron-de-tener-siete-hijos-dos-310604</a></p>
+<p><a href="https://www.elespectador.com/noticias/salud/en-colombia-las-mujeres-tienen-menos-hijos-y-los-hogares-de-solteros-aumentaron/" class="uri">https://www.elespectador.com/noticias/salud/en-colombia-las-mujeres-tienen-menos-hijos-y-los-hogares-de-solteros-aumentaron/</a> <!--------- FALTA AQUI ---------></p>
+<p><br> <br></p>
 </div>
 
 
