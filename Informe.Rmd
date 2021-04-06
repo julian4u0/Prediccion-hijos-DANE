@@ -55,13 +55,22 @@ Finalmente se obtienen los mejores resultados con una red neuronal creada a mano
 
 
 
-En el modelo creado en python se usa  el archivo "datos.csv",  se e copia parte de los datos en "data2.txt". Se usó "open(data2.txt, r)" en el programa de la red neuronal "neural_net.py" para accesar los datos transformandolos en una lista de listas usando "split". Cada lista interior es la una línea de los datos de la tabla de Excel y sus elementos son las columnas de esta línea. Se cambia la expresión "NA" para el valor de zero (0), de modo que se manejen una variables completamente numéricas. Posteriormente se transforma la lista de listas en un Array (o sea, en una matriz) en cual cada linea es una instancia de hogar y se mezclan estas lineas para que la secuencia no sea siempre la misma. Se escojieron las líneas 2,3,4,5,8,9,10 para crear X_data y se transpone, entonces X_data es una matriz de dimension 7xm, en cual cada columna es una instancia de hogar. se estandariza X para tener todo en una escala común. Para crear las predictoras "Y" se escojió la línea 7 del Array hecho anteriormente para crear Y_data y de mismo modo que con las X se transpone, por lo tanto, Y_data se vuelve una matriz de dimensión 1xm en cual los elementos son los numeros de hijos de cada hogar y finalmente se estandariza Y.
+En el modelo creado en python se usa  el archivo "datos.csv",  se e copia parte de los datos en "data2.txt". Se usó "open(data2.txt, r)" en el programa de la red neuronal "neural_net.py" para accesar los datos transformandolos en una lista de listas usando "split". Cada lista interior es la una línea de los datos de la tabla de Excel y sus elementos son las columnas de esta línea. Se cambia la expresión "NA" para el valor de zero (0), de modo que se manejen una variables completamente numéricas. Posteriormente se transforma la lista de listas en un Array (o sea, en una matriz) en cual cada linea es una instancia de hogar y se mezclan estas lineas para que la secuencia no sea siempre la misma. Se escojieron las líneas 2,3,4,5,8,9,10 explicadas de esta manera: 
+2: sexo del jefe del hogar
+3: edad del jefe del hogar
+4: estado civil del jefe del hogar
+5: si el conyuge vive en el hogar
+8: cantidad de personas en el hogar
+9: ingresos del hogar
+10: en cuantos cuartos duermen las personas del hogar
+
+Estas variables se usan para  crear X_data el cual se  transpone, entonces X_data es una matriz de dimension 7xm, en cual cada columna es una instancia de hogar. se estandariza X para tener todo en una escala común. Para crear las predictoras "Y" se escojió la línea 7 del Array hecho anteriormente para crear Y_data y de mismo modo que con las X_data se transpone, por lo tanto, Y_data se vuelve una matriz de dimensión 1xm en cual los elementos son los numeros de hijos de cada hogar y finalmente se estandariza Y_data.
 
 ##### Red Neuronal
 
-La red neuronal que se utilizó tiene un hidden layer con 70 hidden units, con función de activación Leaky Relu, el output-layer tiene la dimensión 1 y no hay una función de activación, la cost-function es el MSE y la red se entrenó usando gradient descent, para testear la red se usó k-fold crossvalidation, para lo que se obtuvó un MSE de más o menos 0.25, o sea un RMSE de 0.5 y una accuracy de casi 74%, y bajo estos resultados, se dio por convincente el rendimiento de la red neuronal.
+La red neuronal que se utilizó tiene un hidden layer con 70 hidden units, con función de activación Leaky Relu, el output-layer tiene la dimensión 1 ysu función de activación es la función de identidad, la cost-function es el MSE y la red se entrenó usando gradient descent, para testear la red se usó k-fold crossvalidation, para lo que se obtuvó un MSE de más o menos 0.25, o sea un RMSE de 0.5 y una accuracy de casi 74%, y bajo estos resultados, se dio por convincente el rendimiento de la red neuronal.
 
-La red se entrena con la función neural_net(X,Y,n_h,learning_rate,epochs, cost_goal = 0, print_cost = False, read = False, save = False), donde 'X' son los datos, 'Y' la variable a predecir, 'n_h' es el numero de capas ocultas, 'cost_goal' es la meta que queremos alcanzar con la función de costo, si 'read' es True indica que la red utilizará los parametros que fueron obtenidos y guardados de anteriores iteraciones, 'save' indica si queremos guardar los parámetros;  los argumentos que se encontraron para rebajar el MSE-training-error fueron los siguientes: 
+La red se entrena con la función neural_net(X,Y,n_h,learning_rate,epochs, cost_goal = 0, print_cost = False, read = False, save = False), donde 'X' son los datos, 'Y' la variable a predecir, 'n_h' es el numero de capas ocultas, 'cost_goal' es la meta que queremos alcanzar con la función de costo; si el cost_goal es alcanzado, el entrenamiento cancela y los parametros son salvados; si 'read' es True indica que la red utilizará los parametros que fueron obtenidos y guardados de anteriores iteraciones, 'save' indica si queremos guardar los parámetros;  los argumentos que se encontraron para rebajar el MSE-training-error fueron los siguientes: 
 
 neural_net(X_data,Y_data,10*n_x,learning_rate=10000,epochs=3000, cost_goal =  0.26, print_cost = True, read = False, save = False)
 
@@ -71,13 +80,16 @@ neural_net(X_data,Y_data,10*n_x,learning_rate=2000,epochs=3000, cost_goal = 0.25
 
 La validación cruzada se hizo  llamando a la función con los siguientes parámetros: 
 cross_validate(10,10*n_x,10000,300, mean_cost_goal = 0.26, print_cost = True, read = False, save = False)
+el primer argumento (10) es el "k", el segundo argumento es la dimensión del hidden layer, el tercer argumento es la learning rate, el cuarto argumento son las epochs, el argumento mean_cost_goal  es por si el promedio de los test-errors es menor que este valor, se entrena la red neuronal sobre todos los datos y se salvan los parametros
+
+Alternativamente se puede usar la función alt_cross_validation que si el mean_cost_goal fue alcanzado, sala los parametros del subconjunto con el mejor test-error.
 
 
 Para evaluar un nuevo hogar, su vector de atributos es estandardizado y despues pasa toda la red neuronal (usando los parametros que se obtuvieron durante el entrenamiento) para obtener una estimación "y_hat" y este "y_hat" se desestandariza y finalmente se redondeado para obtener la predicción. Esto se hace con la función label_new_data(X) que se encuentra en el archivo "neural_net.py"
 
 ## Resultado
 
-El resultado de nuestro trabajo se puede evidenciar en el aplicativo, nuestro modelo tiene un error de 0.26 de MSE, y un accuracy de 0.74 lo cual significa que  de acuerdo a los parámetros entrados por el usuario, este tiene 74% de probabilidad de obtener una predicción acertada. 
+El resultado de nuestro trabajo se puede evidenciar en el aplicativo, nuestro modelo tiene un error menor de 0.26 de MSE, y un accuracy de 0.74 lo cual significa que  de acuerdo a los parámetros entrados por el usuario, este tiene 74% de probabilidad de obtener una predicción acertada. 
 
 
 
