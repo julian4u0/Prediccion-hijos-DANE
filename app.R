@@ -30,7 +30,7 @@ ui <- fluidPage(
             ),
             sliderInput(
                 "edad",
-                "Edad del genero del hogar:",
+                "Edad del jefe del hogar:",
                 min = 1,
                 max = 100,
                 value = 30
