@@ -117,6 +117,8 @@ Enlace para github: https://github.com/julian4u0/Prediccion-hijos-DANE
 
 Enlace para RPubs: https://rpubs.com/jjhurtadoa/
 
+Enlace al aplicativo: https://jjhurtadoa.shinyapps.io/Prediccion-hijos-DANE/
+
 <br>
 <br>
 

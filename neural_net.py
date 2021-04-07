@@ -375,8 +375,8 @@ def label_new_data(X1, X2, X3, X4, X5, X6, X7):
 	#destandardize label
 	Y_hat = Y_hat * Y_std + Y_mean
 	#round label to integer
-	#Y_hat =  round(Y_hat[0][0])
-	Y_hat =  Y_hat[0][0]
+	Y_hat =  round(Y_hat[0][0])
+	#Y_hat =  Y_hat[0][0]
 
 	return Y_hat
 
