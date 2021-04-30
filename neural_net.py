@@ -344,7 +344,10 @@ def test_model(X,Y):
 	#calculate costs
 	cost = cost_func(Y,Y_hat)
 
+	#show results
 	print(cost)
+	accuracy(Y,Y_hat)
+	
 	return (cost)
 
 #k-fold
