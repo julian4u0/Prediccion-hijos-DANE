@@ -158,7 +158,7 @@ modelo <- function(genero, edad, estadocivil, etnia, personas, ingresos, cuartos
     #aca se puede llamar a un modelo
     resultado <-
         system(paste(
-            c("python", "function_model_eval.py", genero, edad, estadocivil, "", personas, ingresos, cuartos),
+            c("python", "function_model_eval.py", genero, edad, estadocivil, '""', personas, ingresos, cuartos),
             collapse = " "
         ),
         wait = TRUE,

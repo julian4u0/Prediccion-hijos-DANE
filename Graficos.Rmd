@@ -20,6 +20,12 @@ data <- read.csv("nuevos_datos.csv")
 ```
 
 ```{r}
+data$P5667[data$P5667 != ""]
+```
+
+
+
+```{r}
 
 
 x<- c(1, 2)
