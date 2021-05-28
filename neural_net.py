@@ -439,12 +439,15 @@ def alt_cross_validate(k,n_h,learning_rate,epochs, least_cost_goal = 0, print_co
 
 #one can import the following function from a different file to use the neural network and the obtained parameters from this file to make a prediction on new date
 def label_new_data(X1, X2, X3, X4, X5, X6, X7):
-	#reshape X
-	X = np.array([X1, X2, X3, X4, X5, X6, X7])
+   #Get ethnicity index 
+	X_e_i = ethnicities.index("\"" +X4 + "\"")
+	
+	X = np.array([X1, X2, X3, X_e_i, X5, X6, X7])
 	X = X.reshape((7,1))
-	#categorize Ethnicity
-	X[4,0] = ethnicities.index(X[3,0])
-	#standardize X
+	
+	
+	
+	
 	X = (X - X_mean) / X_std
 	#call learned parameters
 	parameters = read_parameters()
@@ -457,5 +460,3 @@ def label_new_data(X1, X2, X3, X4, X5, X6, X7):
 	#Y_hat =  Y_hat[0][0]
 
 	return Y_hat
-
-print(label_new_data(int(genero), int(edad), int(estadocivil), int(a), int(personas), int(ingresos), int(cuartos)))

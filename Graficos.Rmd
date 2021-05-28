@@ -1,0 +1,52 @@
+---
+title: "Graficas"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(ggplot2)
+
+
+```
+
+```{r}
+
+data <- read.csv("nuevos_datos.csv")
+```
+
+```{r}
+
+
+x<- c(1, 2)
+
+# Barplot
+
+
+seleccion <- 1
+
+
+ggplot(data, aes(P6020)) +
+   geom_bar(fill = ifelse(x == 1, 'darkgreen', 'gray')) +
+   ylab("Frecuencia") +
+   xlab("Genero") +
+   ggtitle("Genero del jefe del hogar") +
+   scale_x_discrete(name = "Genero", limits = c("Masculino" , "Femenino")) 
+
+
+```
+```{r}
+ggplot(data, aes(P6040)) +
+   geom_histogram() + 
+   ylab("Frecuencia") + 
+   xlab("Genero") + 
+   ggtitle("Edad del jefe del hogar") + 
+   xlab("Edad (años)") +
+   geom_vline(xintercept = 40, color = "darkgreen", linetype="dotted", size = 1.3) 
+```
+
+

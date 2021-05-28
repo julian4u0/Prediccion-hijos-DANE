@@ -1,4 +1,9 @@
+# Load Shiny
 library(shiny)
+# Load ggplot2
+library(ggplot2)
+
+data <- read.csv("nuevos_datos.csv")
 
 #use_python("/usr/local/bin/python")
 #======================================================================================#
@@ -89,7 +94,15 @@ ui <- fluidPage(
         
         #======================================================================================#
         # Mostrar output de server
-        mainPanel(htmlOutput("textoPrediccion"))
+        mainPanel(htmlOutput("textoPrediccion"), 
+                  hr(),
+                  h2("Grafico descriptivo de tu selección"),
+                  hr(),
+                  fluidRow(
+                           column(6,plotOutput(outputId = "barplot_sexo", height = "300px")),
+                           column(6,plotOutput(outputId = "hist_edad", height = "300px"))
+                  ))
+        
         # Fin mostrar output
         #======================================================================================#
     )
@@ -110,16 +123,42 @@ server <- function(input, output) {
             "</h4>"
         )
     })
+    
+    output$barplot_sexo <- renderPlot({
+        
+        x<- c(1, 2)
+        ggplot(data, aes(P6020)) +
+            geom_bar(fill = ifelse(x == input$genero,'red','gray')) + 
+            ylab("Frecuencia") + 
+            xlab("Genero") + 
+            ggtitle("Genero del jefe del hogar") + 
+            scale_x_discrete(name = "Genero", limits = c("Masculino" , "Femenino")) 
+        
+        
+    })
+    
+    output$hist_edad <- renderPlot({
+        
+        ggplot(data, aes(P6040)) +
+            geom_histogram() + 
+            ylab("Frecuencia") + 
+            xlab("Genero") + 
+            ggtitle("Edad del jefe del hogar") + 
+            xlab("Edad (años)") +
+            geom_vline(xintercept = input$edad, color = "red", linetype="dotted", size = 1.3) 
+        
+        
+    })
 }
 #fin server
 
 #======================================================================================#
 # funciones
-modelo <- function(genero, edad, estadocivil, a, personas, ingresos, cuartos) {
+modelo <- function(genero, edad, estadocivil, etnia, personas, ingresos, cuartos) {
     #aca se puede llamar a un modelo
     resultado <-
         system(paste(
-            c("python", "neural_net.py", genero, edad, estadocivil, a, personas, ingresos, cuartos),
+            c("python", "function_model_eval.py", genero, edad, estadocivil, "", personas, ingresos, cuartos),
             collapse = " "
         ),
         wait = TRUE,
