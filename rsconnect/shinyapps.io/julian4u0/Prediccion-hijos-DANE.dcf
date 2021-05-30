@@ -5,9 +5,10 @@ account: julian4u0
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3885267
-bundleId: 4412336
+bundleId: 4658172
 url: https://julian4u0.shinyapps.io/prediccion-hijos-dane/
-when: 1617119677.80835
+when: 1622415408.26893
+lastSyncTime: 1622415408.26893
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: .RData|data2.txt|datos.csv|knn_redNeuronalKeras.Rmd|neural_net.py|parameters.txt|r-manipulacion-datos.html|r-manipulacion-datos.nb.html|r-manipulacion-datos.Rmd|README.md
+ignoredFiles: Atenci?n integral de los ni?os y ni?as menores de 5 a?os.sav|Caracteristicas y composicion del hogar.sav|Datos de la vivienda.sav|datos.csv|datosNA.R|EnlaceVIDEO_PROMOCIONAL|Graficos.Rmd|index.html|Informe.Rmd|knn.Rmd|knn_redNeuronalKeras.Rmd|r-manipulacion-datos.html|r-manipulacion-datos.nb.html|r-manipulacion-datos.Rmd|RNNKeras.Rmd|Servicios del hogar.sav

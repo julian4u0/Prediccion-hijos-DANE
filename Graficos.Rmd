@@ -19,6 +19,12 @@ library(ggplot2)
 data <- read.csv("nuevos_datos.csv")
 ```
 
+
+```{r}
+
+data <- read.csv2(text = readLines("nuevos_datos.csv", warn = FALSE), header = TRUE, sep = ",")
+```
+
 ```{r}
 data$P5667[data$P5667 != ""]
 ```

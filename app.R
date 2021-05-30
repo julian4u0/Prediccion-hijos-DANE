@@ -1,11 +1,13 @@
+#use_python("/usr/local/bin/python")
+
 # Load Shiny
 library(shiny)
 # Load ggplot2
 library(ggplot2)
 
-data <- read.csv("nuevos_datos.csv")
 
-#use_python("/usr/local/bin/python")
+data <- read.csv2(text = readLines("nuevos_datos.csv", warn = FALSE), header = TRUE, sep = ",")
+
 #======================================================================================#
 # Definir el UI para la
 # Inicio UI
