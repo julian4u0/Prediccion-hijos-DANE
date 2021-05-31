@@ -6,7 +6,12 @@ library(shiny)
 library(ggplot2)
 
 
-data <- read.csv2(text = readLines("nuevos_datos.csv", warn = FALSE), header = TRUE, sep = ",")
+data <-
+    read.csv2(
+        text = readLines("nuevos_datos.csv", warn = FALSE),
+        header = TRUE,
+        sep = ","
+    )
 
 #======================================================================================#
 # Definir el UI para la
@@ -18,10 +23,8 @@ ui <- fluidPage(
     ),
     h4("Introduce las variables correspondientes:"),
     h5(
-        a(
-            href = "https://htmlpreview.github.io/?https://github.com/julian4u0/Prediccion-hijos-DANE/blob/main/Informe.html",
-            "Informe del aplicativo"
-        )
+        a(href = "https://htmlpreview.github.io/?https://github.com/julian4u0/Prediccion-hijos-DANE/blob/main/Informe.html",
+          "Informe del aplicativo")
     ),
     
     # En side bar panel van todos los selectores
@@ -42,12 +45,11 @@ ui <- fluidPage(
                 max = 100,
                 value = 30
             ),
-            sliderInput(
-                "personas",
-                "Cantidad de personas que conforman el hogar:",
-                min = 1,
-                max = 15,
-                value = 3
+            selectInput(
+                "viveconyuge",
+                "El jefe del hogar vive con su conyuge:",
+                c("Si" = 1,
+                  "No" = 0)
             ),
             numericInput(
                 "ingresos",
@@ -96,14 +98,18 @@ ui <- fluidPage(
         
         #======================================================================================#
         # Mostrar output de server
-        mainPanel(htmlOutput("textoPrediccion"), 
-                  hr(),
-                  h2("Grafico descriptivo de tu selección"),
-                  hr(),
-                  fluidRow(
-                           column(6,plotOutput(outputId = "barplot_sexo", height = "300px")),
-                           column(6,plotOutput(outputId = "hist_edad", height = "300px"))
-                  ))
+        mainPanel(
+            htmlOutput("textoPrediccion"),
+            hr(),
+            h2("Grafico descriptivo de tu selección"),
+            hr(),
+            fluidRow(column(
+                6, plotOutput(outputId = "barplot_sexo", height = "300px")
+            ),
+            column(
+                6, plotOutput(outputId = "hist_edad", height = "300px")
+            ))
+        )
         
         # Fin mostrar output
         #======================================================================================#
@@ -116,38 +122,48 @@ ui <- fluidPage(
 
 #inicio server
 server <- function(input, output) {
-    
-    
     output$textoPrediccion <- renderText({
         paste(
             "<h4>Numero Estimado de hijos: ",
-            modelo(input$genero, input$edad,input$estadocivil, 1, input$personas, input$ingresos, input$cuartos),
+            modelo(
+                input$genero,
+                input$edad,
+                input$estadocivil,
+                input$viveconyuge,
+                1,
+                input$ingresos,
+                input$cuartos
+            ),
             "</h4>"
         )
     })
     
     output$barplot_sexo <- renderPlot({
-        
-        x<- c(1, 2)
+        x <- c(1, 2)
         ggplot(data, aes(P6020)) +
-            geom_bar(fill = ifelse(x == input$genero,'red','gray')) + 
-            ylab("Frecuencia") + 
-            xlab("Genero") + 
-            ggtitle("Genero del jefe del hogar") + 
-            scale_x_discrete(name = "Genero", limits = c("Masculino" , "Femenino")) 
+            geom_bar(fill = ifelse(x == input$genero, 'red', 'gray')) +
+            ylab("Frecuencia") +
+            xlab("Genero") +
+            ggtitle("Genero del jefe del hogar") +
+            scale_x_discrete(name = "Genero",
+                             limits = c("Masculino" , "Femenino"))
         
         
     })
     
     output$hist_edad <- renderPlot({
-        
         ggplot(data, aes(P6040)) +
-            geom_histogram() + 
-            ylab("Frecuencia") + 
-            xlab("Genero") + 
-            ggtitle("Edad del jefe del hogar") + 
+            geom_histogram() +
+            ylab("Frecuencia") +
+            xlab("Genero") +
+            ggtitle("Edad del jefe del hogar") +
             xlab("Edad (años)") +
-            geom_vline(xintercept = input$edad, color = "red", linetype="dotted", size = 1.3) 
+            geom_vline(
+                xintercept = input$edad,
+                color = "red",
+                linetype = "dotted",
+                size = 1.3
+            )
         
         
     })
@@ -156,18 +172,35 @@ server <- function(input, output) {
 
 #======================================================================================#
 # funciones
-modelo <- function(genero, edad, estadocivil, etnia, personas, ingresos, cuartos) {
-    #aca se puede llamar a un modelo
-    resultado <-
-        system(paste(
-            c("python", "function_model_eval.py", genero, edad, estadocivil, '""', personas, ingresos, cuartos),
-            collapse = " "
-        ),
-        wait = TRUE,
-        intern = T)
-    
-    return(resultado)
-}
+modelo <-
+    function(genero,
+             edad,
+             estadocivil,
+             viveconyuge,
+             etnia ,
+             ingresos,
+             cuartos) {
+        #aca se puede llamar a un modelo
+        resultado <-
+            system(paste(
+                c(
+                    "python",
+                    "function_model_eval.py",
+                    genero,
+                    edad,
+                    estadocivil,
+                    viveconyuge,
+                    '""',
+                    ingresos,
+                    cuartos
+                ),
+                collapse = " "
+            ),
+            wait = TRUE,
+            intern = T)
+        
+        return(resultado)
+    }
 #fin funciones
 #======================================================================================#
 

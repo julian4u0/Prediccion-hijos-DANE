@@ -437,12 +437,14 @@ def alt_cross_validate(k,n_h,learning_rate,epochs, least_cost_goal = 0, print_co
 	print("least cost = "+str(cost))
 	return(parameters)
 
+#print(neural_net.label_new_data(int(genero), int(edad), int(estadocivil),int(viveconyuge), etnia, int(ingresos), int(cuartos)))
+
 #one can import the following function from a different file to use the neural network and the obtained parameters from this file to make a prediction on new date
 def label_new_data(X1, X2, X3, X4, X5, X6, X7):
    #Get ethnicity index 
-	X_e_i = ethnicities.index("\"" +X4 + "\"")
+	X_e_i = ethnicities.index("\"" +X5 + "\"")
 	
-	X = np.array([X1, X2, X3, X_e_i, X5, X6, X7])
+	X = np.array([X1, X2, X3,X4 , X_e_i, X6, X7])
 	X = X.reshape((7,1))
 	
 	

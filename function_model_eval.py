@@ -4,9 +4,9 @@ import neural_net
 genero = sys.argv[1]
 edad = sys.argv[2]
 estadocivil = sys.argv[3]
-etnia = sys.argv[4]
-personas = sys.argv[5] # numero de personas que viven en el hogar
-ingresos = sys.argv[6] #ingresos del hogar
+viveconyuge = sys.argv[4]
+etnia = sys.argv[5]  
+ingresos = sys.argv[6] 
 cuartos = sys.argv[7] #cuartos
 
 
@@ -20,4 +20,4 @@ cuartos = sys.argv[7] #cuartos
 
 
 
-print(neural_net.label_new_data(int(genero), int(edad), int(estadocivil), etnia, int(personas), int(ingresos), int(cuartos)))
+print(neural_net.label_new_data(int(genero), int(edad), int(estadocivil),int(viveconyuge), etnia, int(ingresos), int(cuartos)))
