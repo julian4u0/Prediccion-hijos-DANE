@@ -1,0 +1,106 @@
+---
+title: "Analisis Descriptivo de Variables Utilizadas"
+output: html_document
+---
+
+
+## Un breve análisis descriptivo  de variables utilizadas en nuestro modelo
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+datos_utilizados <- read.csv("nuevos_datos.csv")
+
+```
+
+#### Sexo del jefe del hogar: 
+
+```{r}
+Sexo_jefe_hogar <- (datos_utilizados$P6020 )
+
+Sexo_jefe_hogar <- factor(Sexo_jefe_hogar, labels= c("Hombre", "Mujer"))
+
+sexo <- table(Sexo_jefe_hogar)
+
+
+```
+
+
+
+```{r}
+barplot(sexo, main = "Gráfica de Sexo del jefe del hogar",
+     xlab = "Sexo del jefe del hogar", ylab = "Frecuencia", 
+     col = c("royalblue", "seagreen"))
+```
+Podemos ver que hay más hombres que desempeñan la labor de jefe de hogar.
+
+
+#### Edad del jefe del hogar
+
+```{r}
+Edad_jefe_hogar <- (datos_utilizados$P6040 )
+edad <- table(Edad_jefe_hogar)
+
+```
+
+```{r}
+plot(edad, main = "Gráfica de Edad del jefe del hogar",
+     xlab = "Edad del jefe del hogar", ylab = "Frecuencia")
+```
+
+Podemos notar que la edad del jefe del hogar no tiene un rango de edad muy dominante
+
+
+#### Edad del jefe del hogar
+
+```{r}
+Estado_civil <- (datos_utilizados$P5502 )
+Estado_civil <- factor(Estado_civil)
+
+estado_civil <- table(Estado_civil)
+```
+
+1 No está casado(a) y vive en pareja hace menos de dos años
+2 No está casado(a) y vive en pareja hace dos años o más
+3 Está viudo(a)
+4 Está separado(a) o divorciado(a)
+5 Está soltero(a)
+6 Está casado(a) 
+
+```{r}
+barplot(estado_civil)
+```
+Podemos ver que gran parte de los jefes de hogar viven en unión libre, o casados. 
+
+
+
+#### Ingresos del hogar
+
+```{r}
+Ingresos <- (datos_utilizados$I_HOGAR )
+Ingresos <- factor(Ingresos)
+
+```
+
+```{r}
+plot(Ingresos, main = "Gráfica de Ingresos del hogar",
+     xlab = "Ingresos del hogar", ylab = "Frecuencia")
+```
+Podemos ver que hay tendencia en los ingresos menores a 1.5 millones
+
+
+#### Número de cuartos en el hogar
+
+```{r}
+Cuartos <- (datos_utilizados$P5010 )
+Cuartos <- factor(Cuartos)
+
+```
+
+```{r}
+plot(Cuartos, main = "Gráfica de Cuartos para dormir del hogar",
+     xlab = "Cuartos del hogar", ylab = "Frecuencia")
+```
+Podemos ver que la mayoría de hogares tienen 1 o 2 cuartos para dormir. 
