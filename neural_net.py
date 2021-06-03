@@ -441,7 +441,7 @@ def alt_cross_validate(k,n_h,learning_rate,epochs, least_cost_goal = 0, print_co
 
 #one can import the following function from a different file to use the neural network and the obtained parameters from this file to make a prediction on new date
 def label_new_data(X1, X2, X3, X4, X5, X6, X7):
-   #Get ethnicity index 
+   	#Get ethnicity index 
 	print("X5 = ",X5)
 	X_e_i = ethnicities.index("\"" +X5 + "\"")
 	print(X_e_i)
